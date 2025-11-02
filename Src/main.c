@@ -18,6 +18,7 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "stm32f1xx_hal_rcc.h"
 
 
 /* Private function prototypes -----------------------------------------------*/
@@ -86,17 +87,10 @@ void SystemClock_Config(void)
  */
 static void MX_GPIO_Init(void)
 {
-    /* USER CODE BEGIN MX_GPIO_Init_1 */
-
-    /* USER CODE END MX_GPIO_Init_1 */
-
     /* GPIO Ports Clock Enable */
     __HAL_RCC_GPIOD_CLK_ENABLE();
     __HAL_RCC_GPIOA_CLK_ENABLE();
-
-    /* USER CODE BEGIN MX_GPIO_Init_2 */
-
-    /* USER CODE END MX_GPIO_Init_2 */
+    __HAL_RCC_GPIOB_CLK_ENABLE();
 }
 
 /* USER CODE BEGIN 4 */

@@ -1,5 +1,6 @@
 #include "lcd1602a.h"
 
+#include "main.h"
 #include "stm32f1xx_hal.h"
 #include "stm32f1xx_hal_gpio.h"
 #include "stm32f1xx_hal_i2c.h"
@@ -16,7 +17,7 @@
  * D = 1 -> display on
  */
 
-void ldc_driver_init(I2C_TypeDef *i2c_module, uint8_t *buffer, uint32_t i2c_speed)
+void lcd_driver_init(I2C_TypeDef *i2c_module, uint32_t i2c_speed)
 {
     /* --------------- GPIO Initialization --------------- */
 
@@ -50,11 +51,20 @@ void ldc_driver_init(I2C_TypeDef *i2c_module, uint8_t *buffer, uint32_t i2c_spee
     I2C_InitTypeDef initialize = {
         .ClockSpeed = i2c_speed,
         .DutyCycle  = I2C_DUTYCYCLE_2,
+        .OwnAddress1 = 0,
+        .OwnAddress2 = 0,
+        .AddressingMode = I2C_ADDRESSINGMODE_7BIT,
+        .DualAddressMode = I2C_DUALADDRESS_DISABLE,
+        .GeneralCallMode = I2C_GENERALCALL_DISABLE,
+        .NoStretchMode = I2C_NOSTRETCH_DISABLE
     };
 
     I2C_HandleTypeDef hi2c = {
         .Instance = i2c_module,
         .Init     = initialize,
-        .pBuffPtr = buffer,
     };
+
+    if (HAL_I2C_Init(&hi2c) != HAL_OK) {
+        Error_Handler();
+    }
 }

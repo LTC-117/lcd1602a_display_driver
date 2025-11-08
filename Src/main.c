@@ -20,6 +20,8 @@
 #include "main.h"
 #include "stm32f1xx_hal_rcc.h"
 
+#include "lcd1602a.h"
+
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
@@ -40,6 +42,7 @@ int main(void)
 
     /* Initialize all configured peripherals */
     MX_GPIO_Init();
+    lcd_driver_init(I2C1, 100000);
 
     while (1) {
     }
